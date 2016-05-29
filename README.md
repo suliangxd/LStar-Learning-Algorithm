@@ -9,5 +9,5 @@
 -----
 
 ### 运行截图
-已(01)*为例，可识别字符串为: "01", "0101", "010101", "01010101", ...
-![demo](https://github.com/suliangxd/LStar-Learning-Algorithm/edit/master/demo.png)
+已(01)*为例，可识别字符串为: "01", "0101", "010101", "01010101", ...    
+![demo](http://chuantu.biz/t5/2/1464534636x2728278237.png)
