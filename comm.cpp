@@ -49,7 +49,7 @@ void updateSandSdotSigema(string sa, vector<string> sigemaSet,
 }
 
 string getSa(vector<string> sSet, vector<string> sigemaSet, vector<string> eSet, vector<string> Uset) {
-    string sae = "";
+    string sa = "";
     if (eSet.size() == 0) {
         // sSet和eSet为空
         if (sSet.size() == 0) {
@@ -57,7 +57,7 @@ string getSa(vector<string> sSet, vector<string> sigemaSet, vector<string> eSet,
                 string s0 = a_sigemaSet;
                 string s1 = "";
                 if (getT(s0, Uset) != getT(s1, Uset)) {
-                    sae = s0;
+                    sa = s0;
                     goto over;
                 }
             }
@@ -69,7 +69,7 @@ string getSa(vector<string> sSet, vector<string> sigemaSet, vector<string> eSet,
                     for (auto a_sigemaSet : sigemaSet) {
                         string s0 = s_sSet + a_sigemaSet;
                         if (getT(s0, Uset) != getT(s1, Uset)) {
-                            sae = s_sSet + a_sigemaSet;
+                            sa = s_sSet + a_sigemaSet;
                             goto over;
                         }
                     }
@@ -85,25 +85,41 @@ string getSa(vector<string> sSet, vector<string> sigemaSet, vector<string> eSet,
                     string s0 = a_sigemaSet + e_sSet;
                     string s1 = e_sSet;
                     if (getT(s0, Uset) != getT(s1, Uset)) {
-                        sae = a_sigemaSet;
+                        sa = a_sigemaSet;
                         goto over;
                     }
                 }
             }
             
         } else {
-            for (auto s1_sSet : sSet){
-                for (auto s_sSet : sSet) {
-                    for (auto a_sigemaSet : sigemaSet) {
+            for (auto s_sSet : sSet) {
+                for (auto a_sigemaSet : sigemaSet) {
+                    
+                    bool isNowSA = true;
+                    
+                    for (auto s1_sSet : sSet) {
+                        
+                        int okfors1_sSet = 0;
+                        
                         for (auto e_sSet : eSet) {
+                            
                             string s0 = s_sSet + a_sigemaSet + e_sSet;
                             string s1 = s1_sSet + e_sSet;
-                            if (getT(s0, Uset) != getT(s1, Uset)) {
-                                sae = s_sSet + a_sigemaSet;
-                                goto over;
+                            
+                            if (getT(s0, Uset) == getT(s1, Uset)) {
+                                okfors1_sSet ++;
                             }
                         }
+                        if (okfors1_sSet == eSet.size()) {
+                            isNowSA = false;
+                            break;
+                        }
                     }
+                    if (isNowSA == true) {
+                        sa = s_sSet + a_sigemaSet;
+                        goto over;
+                    }
+                
                 }
             }
 
@@ -111,8 +127,9 @@ string getSa(vector<string> sSet, vector<string> sigemaSet, vector<string> eSet,
     }
 
 over:
-    return sae;
+    return sa;
 }
+
 
 void getF(vector<string> sSet, vector<string> & fSet, vector<string> Uset) {
     fSet.clear();
